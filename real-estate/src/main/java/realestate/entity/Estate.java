@@ -53,7 +53,7 @@ public class Estate {
     @ManyToMany(cascade = CascadeType.MERGE)
     private Collection<Characteristic> characteristics = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, mappedBy = "estate")
     private Collection<EstatePhoto> photos = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

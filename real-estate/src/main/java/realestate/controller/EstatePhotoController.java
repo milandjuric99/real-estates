@@ -52,8 +52,9 @@ public class EstatePhotoController {
         return new ResponseEntity<>(photo, HttpStatus.OK);
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/upload/{estate_id}")
     public ResponseEntity<?> fileUpload(@RequestParam("File") MultipartFile image,
+                                        @PathVariable("estate_id") Long id,
                                         EstatePhoto estatePhoto) throws IOException {
 
         if(image.isEmpty()){
@@ -65,6 +66,7 @@ public class EstatePhotoController {
             compressBytes(estatePhoto.getPhoto());
             Path path = Paths.get(FILE_DIRECTORY + image.getOriginalFilename());
             Files.write(path, estatePhoto.getPhoto());
+            estatePhoto.setEstate(this.estateService.findById(id));
             this.estatePhotoService.save(estatePhoto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch(IOException ioe){

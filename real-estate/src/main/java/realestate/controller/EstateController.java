@@ -38,7 +38,6 @@ public class EstateController {
         for(Estate estate : estates){
             for(EstatePhoto estatePhoto : estatePhotos){
                 decompressBytes(estatePhoto.getPhoto());
-                estate.setPhotos(estatePhotos);
             }
         }
         if(estates == null){
@@ -72,11 +71,6 @@ public class EstateController {
         HttpHeaders headers = new HttpHeaders();
         if(estate.getId() != null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Collection<EstatePhoto> estatePhotos = this.estatePhotoService.findAll();
-        for(EstatePhoto estatePhoto : estatePhotos){
-            compressBytes(estatePhoto.getPhoto());
-            estate.setPhotos(estatePhotos);
         }
         this.estateService.save(estate);
         headers.setLocation(ucBuilder.path("/api/appointment/{id}").buildAndExpand(estate.getId()).toUri());

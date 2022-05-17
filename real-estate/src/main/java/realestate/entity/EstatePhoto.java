@@ -16,9 +16,15 @@ public class EstatePhoto {
     @Column(name = "photo")
     private byte[] photo;
 
-    public EstatePhoto(Long id, byte[] photo) {
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name="estate_id", nullable=false)
+    private Estate estate;
+
+    public EstatePhoto(Long id, byte[] photo, Estate estate) {
         this.id = id;
         this.photo = photo;
+        this.estate = estate;
     }
 
     public EstatePhoto() {
@@ -38,5 +44,13 @@ public class EstatePhoto {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public Estate getEstate() {
+        return estate;
+    }
+
+    public void setEstate(Estate estate) {
+        this.estate = estate;
     }
 }
