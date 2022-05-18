@@ -8,9 +8,7 @@ import realestate.service.EstateService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.ListIterator;
 import java.util.Optional;
 import java.util.zip.Deflater;
 
@@ -20,22 +18,19 @@ public class EstateServiceImpl implements EstateService {
 
     private final EstateRepository estateRepository;
     private final AddressRepository addressRepository;
-    private final CharacteristicRepository characteristicRepository;
     private final TypeRepository typeRepository;
     private final FurnitureRepository furnitureRepository;
-    private final EstatePhotoRepository estatePhotoRepository;
+    private final PurposeRepository purposeRepository;
 
     @Autowired
     public EstateServiceImpl(EstateRepository estateRepository, AddressRepository addressRepository,
-                             CharacteristicRepository characteristicRepository,
                              TypeRepository typeRepository, FurnitureRepository furnitureRepository,
-                             EstatePhotoRepository estatePhotoRepository) {
+                             PurposeRepository purposeRepository) {
         this.estateRepository = estateRepository;
         this.addressRepository = addressRepository;
-        this.characteristicRepository = characteristicRepository;
         this.typeRepository = typeRepository;
         this.furnitureRepository = furnitureRepository;
-        this.estatePhotoRepository = estatePhotoRepository;
+        this.purposeRepository = purposeRepository;
     }
 
     @Override
@@ -54,15 +49,20 @@ public class EstateServiceImpl implements EstateService {
 
         Optional<Furniture> furniture = this.furnitureRepository.findByName(estate.getFurniture().getName());
         Optional<Type> type = this.typeRepository.findByName(estate.getType().getName());
-        Collection<EstatePhoto> photos = this.estatePhotoRepository.findAll();
-        Collection<Characteristic> characteristics = this.characteristicRepository.findAll();
+        Optional<Purpose> purpose = this.purposeRepository.findByName(estate.getPurpose().getName());
 
-                address.ifPresent(estate::setAddress);
-        furniture.ifPresent(estate::setFurniture);
-        type.ifPresent(estate::setType);
-        estate.setCharacteristics(characteristics);
-        estate.setPhotos(photos);
-        estate.setCharacteristics(characteristics);
+        if(address.isPresent()) {
+            address.ifPresent(estate::setAddress);
+        }
+        if(furniture.isPresent()){
+            furniture.ifPresent(estate::setFurniture);
+        }
+        if(type.isPresent()){
+            type.ifPresent(estate::setType);
+        }
+        if(purpose.isPresent()){
+            purpose.ifPresent(estate::setPurpose);
+        }
         this.estateRepository.save(estate);
     }
 

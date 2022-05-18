@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import realestate.entity.Characteristic;
 import realestate.entity.Estate;
 import realestate.entity.EstatePhoto;
+import realestate.service.impl.CharacteristicServiceImpl;
 import realestate.service.impl.EstatePhotoServiceImpl;
 import realestate.service.impl.EstateServiceImpl;
 
@@ -31,14 +33,15 @@ public class EstateController {
     @Autowired
     private EstatePhotoServiceImpl estatePhotoService;
 
+    @Autowired
+    private CharacteristicServiceImpl characteristicService;
+
     @GetMapping(value = "/")
     public ResponseEntity<?> getEstates(){
         Collection<Estate> estates = this.estateService.findAll();
         Collection<EstatePhoto> estatePhotos = this.estatePhotoService.findAll();
-        for(Estate estate : estates){
-            for(EstatePhoto estatePhoto : estatePhotos){
-                decompressBytes(estatePhoto.getPhoto());
-            }
+        for(EstatePhoto estatePhoto : estatePhotos){
+            decompressBytes(estatePhoto.getPhoto());
         }
         if(estates == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -93,6 +96,17 @@ public class EstateController {
         this.estateService.save(updatedEstate);
         headers.setLocation(ucBuilder.path("/api/appointment/{id}").buildAndExpand(estate.getId()).toUri());
         return new ResponseEntity<>(updatedEstate, headers, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{estateId}/add-characteristic/{characteristicId}")
+    public ResponseEntity<?> addCharacteristicToEstate(@PathVariable("estateId") Long estateId,
+                                                       @PathVariable("characteristicId") Long characteristicId){
+        Characteristic characteristic = this.characteristicService.findById(characteristicId);
+        Estate updatedEstate = this.estateService.findById(estateId);
+        updatedEstate.getCharacteristics().add(characteristic);
+        this.estateService.save(updatedEstate);
+        return new ResponseEntity<>(updatedEstate, HttpStatus.NO_CONTENT);
+
     }
 
     // compress the image bytes before storing it in the database

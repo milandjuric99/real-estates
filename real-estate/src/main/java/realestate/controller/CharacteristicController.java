@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import realestate.entity.Characteristic;
+import realestate.entity.Estate;
 import realestate.service.impl.CharacteristicServiceImpl;
+import realestate.service.impl.EstateServiceImpl;
 
 import java.util.Collection;
 
@@ -16,22 +18,26 @@ public class CharacteristicController {
 
     @Autowired
     private CharacteristicServiceImpl characteristicService;
+    @Autowired
+    private EstateServiceImpl estateService;
 
     @GetMapping(value = "/")
-    public ResponseEntity<?> getCharacteristics(){
+    public ResponseEntity<?> getCharacteristics() {
         Collection<Characteristic> characteristics = this.characteristicService.findAll();
-        if(characteristics == null){
+        if (characteristics == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(characteristics, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getCharacteristic(@PathVariable("id") Long id){
+    public ResponseEntity<?> getCharacteristic(@PathVariable("id") Long id) {
         Characteristic characteristic = this.characteristicService.findById(id);
-        if(characteristic == null){
+        if (characteristic == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(characteristic, HttpStatus.OK);
     }
+
+
 }

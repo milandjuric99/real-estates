@@ -1,5 +1,7 @@
 package realestate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "estates")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Estate {
 
     @Id
@@ -50,6 +53,7 @@ public class Estate {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
     @ManyToMany(cascade = CascadeType.MERGE)
     private Collection<Characteristic> characteristics = new ArrayList<>();
 

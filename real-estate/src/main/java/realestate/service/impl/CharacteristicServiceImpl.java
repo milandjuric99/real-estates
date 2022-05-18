@@ -7,6 +7,7 @@ import realestate.repository.CharacteristicRepository;
 import realestate.service.CharacteristicService;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class CharacteristicServiceImpl implements CharacteristicService {
@@ -28,4 +29,10 @@ public class CharacteristicServiceImpl implements CharacteristicService {
     public Collection<Characteristic> findAllById(Long id) {
         return this.characteristicRepository.findAllById(id);
     }
+
+    @Override
+    public void save(Characteristic characteristic) {
+        this.characteristicRepository.save(characteristic);
+    }
+
 }

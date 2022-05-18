@@ -1,5 +1,7 @@
 package realestate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class Characteristic {
 
     @Column(name = "name")
     private String name;
+
 
     public Characteristic(Long id, String name) {
         this.id = id;
