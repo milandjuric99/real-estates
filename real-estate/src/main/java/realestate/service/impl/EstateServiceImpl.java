@@ -1,14 +1,24 @@
 package realestate.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import realestate.entity.*;
+import realestate.entity.utils.PagingHeader;
+import realestate.entity.utils.PagingResponse;
 import realestate.repository.*;
 import realestate.service.EstateService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.zip.Deflater;
 
@@ -71,24 +81,37 @@ public class EstateServiceImpl implements EstateService {
         this.estateRepository.delete(estate);
     }
 
-    // compress the image bytes before storing it in the database
-    public static void compressBytes(byte[] data) {
-        Deflater deflater = new Deflater();
-        deflater.setInput(data);
-        deflater.finish();
+    @Override
+    public PagingResponse get(Specification<Estate> spec, Pageable pageable) {
+        Page<Estate> page = estateRepository.findAll(spec, pageable);
+        List<Estate> content = page.getContent();
+        return new PagingResponse(page.getTotalElements(), (long) page.getNumber(),
+                (long) page.getNumberOfElements(),  pageable.getOffset(), (long) page.getTotalPages(), content);
+    }
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
-        while (!deflater.finished()) {
-            int count = deflater.deflate(buffer);
-            outputStream.write(buffer, 0, count);
+    @Override
+    public PagingResponse get(Specification<Estate> spec, HttpHeaders headers, Sort sort) {
+        if (isRequestPaged(headers)) {
+            return get(spec, buildPageRequest(headers, sort));
+        } else {
+            List<Estate> entities = get(spec, sort);
+            return new PagingResponse((long) entities.size(), 0L, 0L, 0L, 0L, entities);
         }
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-        }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+    }
 
-        outputStream.toByteArray();
+    @Override
+    public boolean isRequestPaged(HttpHeaders headers) {
+        return headers.containsKey(PagingHeader.PAGE_NUMBER.getName()) && headers.containsKey(PagingHeader.PAGE_SIZE.getName());
+    }
+
+    @Override
+    public List<Estate> get(Specification<Estate> spec, Sort sort) {
+        return this.estateRepository.findAll(spec, sort);
+    }
+
+    private Pageable buildPageRequest(HttpHeaders headers, Sort sort) {
+        int page = Integer.parseInt(Objects.requireNonNull(headers.get(PagingHeader.PAGE_NUMBER.getName())).get(0));
+        int size = Integer.parseInt(Objects.requireNonNull(headers.get(PagingHeader.PAGE_SIZE.getName())).get(0));
+        return PageRequest.of(page, size, sort);
     }
 }

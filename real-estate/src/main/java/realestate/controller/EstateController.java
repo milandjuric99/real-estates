@@ -1,6 +1,14 @@
 package realestate.controller;
 
+import net.kaczmarzyk.spring.data.jpa.domain.Between;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.In;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +17,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import realestate.entity.Characteristic;
 import realestate.entity.Estate;
 import realestate.entity.EstatePhoto;
+import realestate.entity.utils.PagingHeader;
+import realestate.entity.utils.PagingResponse;
 import realestate.service.impl.CharacteristicServiceImpl;
 import realestate.service.impl.EstatePhotoServiceImpl;
 import realestate.service.impl.EstateServiceImpl;
@@ -37,16 +47,30 @@ public class EstateController {
     private CharacteristicServiceImpl characteristicService;
 
     @GetMapping(value = "/")
-    public ResponseEntity<?> getEstates(){
-        Collection<Estate> estates = this.estateService.findAll();
-        Collection<EstatePhoto> estatePhotos = this.estatePhotoService.findAll();
-        for(EstatePhoto estatePhoto : estatePhotos){
-            decompressBytes(estatePhoto.getPhoto());
-        }
-        if(estates == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(estates, HttpStatus.OK);
+    public ResponseEntity<List<Estate>> findAll(
+            @And({
+                    @Spec(path = "purpose", params = "purpose", spec = Like.class),
+                    @Spec(path = "city", params = "city", spec = Like.class),
+                    @Spec(path = "municipality", params = "municipality", spec = In.class),
+                    @Spec(path = "type", params = "type", spec = Like.class),
+                    @Spec(path = "rooms", params = "rooms", spec = Like.class),
+                    @Spec(path = "price", params = "price", spec = Equal.class),
+                    @Spec(path = "price", params = {"priceMin", "priceMax"}, spec = Between.class)
+            }) Specification<Estate> spec,
+            Sort sort,
+            @RequestHeader HttpHeaders headers){
+        final PagingResponse response = estateService.get(spec, headers, sort);
+        return new ResponseEntity<>(response.getElements(), returnHttpHeaders(response), HttpStatus.OK);
+    }
+
+    public HttpHeaders returnHttpHeaders(PagingResponse response) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(PagingHeader.COUNT.getName(), String.valueOf(response.getCount()));
+        headers.set(PagingHeader.PAGE_SIZE.getName(), String.valueOf(response.getPageSize()));
+        headers.set(PagingHeader.PAGE_OFFSET.getName(), String.valueOf(response.getPageOffset()));
+        headers.set(PagingHeader.PAGE_NUMBER.getName(), String.valueOf(response.getPageNumber()));
+        headers.set(PagingHeader.PAGE_TOTAL.getName(), String.valueOf(response.getPageTotal()));
+        return headers;
     }
 
     @GetMapping(value = "/{id}")

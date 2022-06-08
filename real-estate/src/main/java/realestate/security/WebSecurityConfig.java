@@ -3,6 +3,7 @@ package realestate.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -62,7 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
-                .antMatchers("/api/estates/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/estates/").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/api/estates/").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/api/estates/").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/estates/**").permitAll()
                 .antMatchers("/api/characteristics/**").hasAuthority("ADMIN")
                 .antMatchers("/api/photo/**").hasAuthority("ADMIN")
                 .antMatchers("/api/furnitures/**").hasAuthority("ADMIN")

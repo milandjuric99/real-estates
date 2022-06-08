@@ -27,7 +27,7 @@ public class Estate {
     private int floor;
 
     @Column(name = "rooms")
-    private int room;
+    private int rooms;
 
     @Column(name = "num_of_bathrooms")
     private int numOfBathroom;
@@ -63,14 +63,14 @@ public class Estate {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Purpose purpose;
 
-    public Estate(Long id, String title, double price, int floor, int room, int numOfBathroom,
+    public Estate(Long id, String title, double price, int floor, int rooms, int numOfBathroom,
                   int squareFootage, String description, Date date, Furniture furniture,
                   Type type, Address address, Set<Characteristic> characteristics, Collection<EstatePhoto> photos) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.floor = floor;
-        this.room = room;
+        this.rooms = rooms;
         this.numOfBathroom = numOfBathroom;
         this.squareFootage = squareFootage;
         this.description = description;
@@ -118,11 +118,11 @@ public class Estate {
     }
 
     public int getRoom() {
-        return room;
+        return rooms;
     }
 
-    public void setRoom(int room) {
-        this.room = room;
+    public void setRooms(int room) {
+        this.rooms = room;
     }
 
     public int getNumOfBathroom() {
