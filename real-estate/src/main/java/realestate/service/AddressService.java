@@ -6,5 +6,8 @@ import java.util.Collection;
 
 public interface AddressService {
 
-    Address findByStreet(String street);
+    Address findById(Long id);
+    Collection<Address> findAll();
+    void save(Address address);
+    void delete(Address address);
 }
