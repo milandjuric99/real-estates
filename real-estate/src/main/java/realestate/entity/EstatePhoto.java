@@ -34,23 +34,26 @@ public class EstatePhoto {
         return id;
     }
 
-    public void setId(Long id) {
+    public EstatePhoto setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public EstatePhoto setPhoto(byte[] photo) {
         this.photo = photo;
+        return this;
     }
 
     public Estate getEstate() {
         return estate;
     }
 
-    public void setEstate(Estate estate) {
+    public EstatePhoto setEstate(Estate estate) {
         this.estate = estate;
+        return this;
     }
 }

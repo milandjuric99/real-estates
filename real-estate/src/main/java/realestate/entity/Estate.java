@@ -89,119 +89,134 @@ public class Estate {
         return id;
     }
 
-    public void setId(Long id) {
+    public Estate setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Estate setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public Estate setPrice(double price) {
         this.price = price;
+        return this;
     }
 
     public int getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
+    public Estate setFloor(int floor) {
         this.floor = floor;
+        return this;
     }
 
     public int getRoom() {
         return rooms;
     }
 
-    public void setRooms(int room) {
+    public Estate setRooms(int room) {
         this.rooms = room;
+        return this;
     }
 
     public int getNumOfBathroom() {
         return numOfBathroom;
     }
 
-    public void setNumOfBathroom(int numOfBathroom) {
+    public Estate setNumOfBathroom(int numOfBathroom) {
         this.numOfBathroom = numOfBathroom;
+        return this;
     }
 
     public int getSquareFootage() {
         return squareFootage;
     }
 
-    public void setSquareFootage(int squareFootage) {
+    public Estate setSquareFootage(int squareFootage) {
         this.squareFootage = squareFootage;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Estate setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public Estate setDate(Date date) {
         this.date = date;
+        return this;
     }
 
     public Furniture getFurniture() {
         return furniture;
     }
 
-    public void setFurniture(Furniture furniture) {
+    public Estate setFurniture(Furniture furniture) {
         this.furniture = furniture;
+        return this;
     }
 
     public Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public Estate setType(Type type) {
         this.type = type;
+        return this;
     }
 
     public Address getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public Estate setAddress(Address address) {
         this.address = address;
+        return this;
     }
 
     public Collection<Characteristic> getCharacteristics() {
         return characteristics;
     }
 
-    public void setCharacteristics(Collection<Characteristic> characteristics) {
+    public Estate setCharacteristics(Collection<Characteristic> characteristics) {
         this.characteristics = characteristics;
+        return this;
     }
 
     public Collection<EstatePhoto> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(Collection<EstatePhoto> photos) {
+    public Estate setPhotos(Collection<EstatePhoto> photos) {
         this.photos = photos;
+        return this;
     }
 
     public Purpose getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(Purpose purpose) {
+    public Estate setPurpose(Purpose purpose) {
         this.purpose = purpose;
+        return this;
     }
 }

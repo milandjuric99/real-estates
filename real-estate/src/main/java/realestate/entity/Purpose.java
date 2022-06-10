@@ -33,23 +33,26 @@ public class Purpose {
         return id;
     }
 
-    public void setId(Long id) {
+    public Purpose setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Purpose setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Set<Estate> getEstates() {
         return estates;
     }
 
-    public void setEstates(Set<Estate> estates) {
+    public Purpose setEstates(Set<Estate> estates) {
         this.estates = estates;
+        return this;
     }
 }

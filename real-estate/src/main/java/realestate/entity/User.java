@@ -83,16 +83,18 @@ public class User implements UserDetails {
         return id;
     }
 
-    public void setId(Long id) {
+    public User setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     @Override
@@ -112,40 +114,45 @@ public class User implements UserDetails {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public User setEnabled(Boolean enabled) {
         this.enabled = enabled;
+        return this;
     }
 
     public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public User setRoles(Set<Role> roles) {
         this.roles = roles;
+        return this;
     }
 
     public void addRole(Role role){
@@ -177,8 +184,9 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
+    public User setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     @Override
@@ -191,10 +199,5 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", roles=" + roles +
                 '}';
-    }
-
-    @Transient
-    public String getFullName(){
-        return firstName + " " + lastName;
     }
 }

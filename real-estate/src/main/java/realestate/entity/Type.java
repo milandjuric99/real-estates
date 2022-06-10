@@ -32,23 +32,26 @@ public class Type {
         return id;
     }
 
-    public void setId(Long id) {
+    public Type setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Type setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Estate getEstate() {
         return estate;
     }
 
-    public void setEstate(Estate estate) {
+    public Type setEstate(Estate estate) {
         this.estate = estate;
+        return this;
     }
 }

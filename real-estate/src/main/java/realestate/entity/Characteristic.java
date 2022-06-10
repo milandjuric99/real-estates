@@ -28,15 +28,17 @@ public class Characteristic {
         return id;
     }
 
-    public void setId(Long id) {
+    public Characteristic setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Characteristic setName(String name) {
         this.name = name;
+        return this;
     }
 }

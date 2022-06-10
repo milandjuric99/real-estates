@@ -42,24 +42,27 @@ public class Role {
         return id;
     }
 
-    public void setId(Long id) {
+    public Role setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Role setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Role setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     @Override

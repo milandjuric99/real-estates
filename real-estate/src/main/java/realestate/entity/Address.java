@@ -44,47 +44,53 @@ public class Address {
         return id;
     }
 
-    public void setId(Long id) {
+    public Address setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public Address setCity(String city) {
         this.city = city;
+        return this;
     }
 
     public String getMunicipality() {
         return municipality;
     }
 
-    public void setMunicipality(String municipality) {
+    public Address setMunicipality(String municipality) {
         this.municipality = municipality;
+        return this;
     }
 
     public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
+    public Address setStreet(String street) {
         this.street = street;
+        return this;
     }
 
     public int getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(int streetNumber) {
+    public Address setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
+        return this;
     }
 
     public Estate getEstate() {
         return estate;
     }
 
-    public void setEstate(Estate estate) {
+    public Address setEstate(Estate estate) {
         this.estate = estate;
+        return this;
     }
 }

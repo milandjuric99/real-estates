@@ -46,7 +46,7 @@ public class AddressController {
         }
         this.addressService.save(address);
         headers.setLocation(ucBuilder.path("/api/address/{id}").buildAndExpand(address.getId()).toUri());
-        return new ResponseEntity<>(headers, address, HttpStatus.CREATED);
+        return new ResponseEntity<>(address, headers, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/{id}")
