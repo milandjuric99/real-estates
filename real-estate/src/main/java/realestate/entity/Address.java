@@ -93,4 +93,16 @@ public class Address {
         this.estate = estate;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", municipality='" + municipality + '\'' +
+                ", street='" + street + '\'' +
+                ", streetNumber=" + streetNumber +
+                ", estate=" + estate +
+                '}';
+    }
 }
