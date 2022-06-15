@@ -50,9 +50,9 @@ public class AddressRepositoryTest {
         Mockito.when(this.addressRepository.save(address))
                 .thenReturn(AddressSupplier.getAddress());
 
-        Address newAddress = this.addressRepository.save(address);
-        Assertions.assertNotNull(newAddress);
-        System.out.println(newAddress);
+        this.addressRepository.save(address);
+        Assertions.assertNotNull(address);
+        System.out.println(address);
     }
 
     @Test
